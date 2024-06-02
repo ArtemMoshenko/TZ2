@@ -24,7 +24,7 @@ jobs:
     - name: Send Telegram Notification
       uses: appleboy/telegram-action@master
       with:
-        token: ${{ 6786181092:AAFaE8nKPARrr63wbJjFmq7z8MVOlKa4WUg }}
+        token: ${{ 6786181092 }}
         chat_id: ${{ 1013939870 }}
         message: |
           Build status: ${{ job.status }}
