@@ -27,3 +27,34 @@ jobs:
       - name: test
         run: mvn test
 
+              - name: Send Telegram notification
+        uses: appleboy/telegram-action@master
+        with:
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }} # Ваш токен бота
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }} # ID чата в Telegram
+          message: |
+            Тесты успешно завершены! 🎉
+            
+            ${{ job.status }}: ${{ job.conclusion }}
+            
+            Подробнее: ${{ github.run_url }}
+            
+            ${{ github.event.repository.owner }}/${{ github.event.repository.name }}@${{ github.sha }}
+
+      - name: Send Telegram notification on failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }}
+        with:
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
+          message: |
+            Тесты не прошли! 🚨
+            
+            ${{ job.status }}: ${{ job.conclusion }}
+            
+            Подробнее: ${{ github.run_url }}
+            
+            ${{ github.event.repository.owner }}/${{ github.event.repository.name }}@${{ github.sha }}
+            
+            ${{ steps.build.outputs.failed-tests }}
+
