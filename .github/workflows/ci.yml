@@ -1,19 +1,48 @@
-name: CI
+name: Java CI with Maven
 
 on:
+#  запуск при push
   push:
     branches: [ main ]
+#  запуск при pull
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+  # запуск workflow вручную из веб-интерфейса GitHub
+  
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: npm install
+      - name: Checkout code
+        uses: actions/checkout@v2
+#        проверка
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        # используем JDK21
+
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Build with Maven  # так как собирали с Maven, указываем это
+        run: mvn -B package --file pom.xml
+        # пакетный режим + указываем pom-ник
+
       - name: Run tests
-        run: npm test
-      - name: Build application
-        run: npm run build
+        run: mvn test | tee test-results.txt
+        # запуск тестов
+
+
+
+      - name: Notify Telegram on success
+        if: success()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" -d chat_id=${{ secrets.CHAT_ID }} -d text="✅🐈Сборка и тесты прошли успешно"
+
+      - name: Notify Telegram on failure
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" -d chat_id=${{ secrets.CHAT_ID }} -d text="⚡️Сборка или тесты не прошли. $TEST_RESULTS"
