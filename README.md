@@ -1,5 +1,5 @@
 ### Мошенко Артём БИ236
-![example workflow](https://github.com/github/docs/actions/workflows/ci.yml/badge.svg)
+[![Java CI with Maven](https://github.com/ArtemMoshenko/TZ2/actions/workflows/ci.yml/badge.svg)](https://github.com/ArtemMoshenko/TZ2/actions/workflows/ci.yml)
 
 ## Функциональность
 Класс NumberOperations предоставляет следующие функциональные возможности:
