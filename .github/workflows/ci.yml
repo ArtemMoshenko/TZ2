@@ -27,11 +27,11 @@ jobs:
       - name: test
         run: mvn test
 
-              - name: Send Telegram notification
+      - name: Send Telegram notification
         uses: appleboy/telegram-action@master
         with:
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }} # Ваш токен бота
-          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }} # ID чата в Telegram
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          chat_id: ${{ secrets.TELEGRAM_CHAT_ID }}
           message: |
             Тесты успешно завершены! 🎉
             
