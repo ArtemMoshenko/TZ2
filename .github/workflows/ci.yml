@@ -34,3 +34,4 @@ jobs:
             Some tests failed.
             Details: ${{ job.steps.filter(step => step.status == 'failure').name }}
           ${{ endif }}
+
