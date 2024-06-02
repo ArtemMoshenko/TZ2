@@ -1,14 +1,11 @@
-name: Java CI with Maven
+name: CI
 
 on:
-#  запуск при push
   push:
     branches: [ main ]
-#  запуск при pull
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-  # запуск workflow вручную из веб-интерфейса GitHub
   
 
 jobs:
@@ -16,22 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: check
         uses: actions/checkout@v2
-#        проверка
-      - name: Set up JDK 21
+      - name: Setup JDK
         uses: actions/setup-java@v2
-        # используем JDK21
-
         with:
           java-version: '21'
           distribution: 'adopt'
 
-      - name: Build with Maven  # так как собирали с Maven, указываем это
+      - name: action&maven
         run: mvn -B package --file pom.xml
-        # пакетный режим + указываем pom-ник
 
-      - name: Run tests
-        run: mvn test | tee test-results.txt
-        # запуск тестов
+      - name: test
+        run: mvn test
 
