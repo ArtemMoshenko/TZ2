@@ -1,4 +1,5 @@
 ### Мошенко Артём БИ236
+![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 ## Функциональность
 Класс NumberOperations предоставляет следующие функциональные возможности:
